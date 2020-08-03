@@ -5,7 +5,7 @@ import io.micronaut.runtime.Micronaut.*
 fun main(args: Array<String>) {
     build()
             .args(*args)
-            .packages("com.nanabell.comp.agent.docker")
+            .packages("com.ilunos.agent.docker")
             .start()
 }
 
