@@ -1,0 +1,23 @@
+micronaut:
+  application:
+    name: DockerAgent
+  security:
+    enabled: true
+    intercept-url-map:
+      -
+        pattern: /**
+        access:
+          - isAuthenticated()
+  router:
+    versioning:
+      enabled: true
+      default-version: 1
+      parameter:
+        enabled: true
+        names:
+          - v,version,api-version
+      header:
+        enabled: true
+        names:
+          - X-API-VERSION
+          - Accept-Version
