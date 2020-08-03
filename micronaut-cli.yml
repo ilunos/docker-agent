@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.nanabell.comp.agent.docker
+testFramework: kotlintest
+sourceLanguage: kotlin
+buildTool: gradle
+features: [annotation-api, app-name, docker, file-watch, gradle, http-client, kotlin, kotlin-application, kotlin-extension-functions, kotlintest, logback, netty-server, readme, security, security-annotations, shade, yaml]
