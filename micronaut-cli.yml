@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: com.nanabell.comp.agent.docker
+defaultPackage: com.ilunos.agent.docker
 testFramework: kotlintest
 sourceLanguage: kotlin
 buildTool: gradle
