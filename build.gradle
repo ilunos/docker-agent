@@ -51,7 +51,7 @@ dependencies {
 
 test.classpath += configurations.developmentOnly
 
-mainClassName = "com.ilunos.agent.docker.ApplicationKt"
+mainClassName = "com.ilunos.agent.docker.IlunosKt"
 
 // use JUnit 5 platform
 test {
