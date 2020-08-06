@@ -2,3 +2,7 @@
 .gradle
 .idea
 gradle
+
+
+build
+!build/libs/docker-agent-*-all.jar
