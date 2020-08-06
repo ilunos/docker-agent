@@ -1,6 +1,7 @@
 package com.ilunos.agent.docker
 
 import io.micronaut.runtime.Micronaut.build
+import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -20,7 +21,9 @@ class Application {
 
         private fun isRunningInsideDocker(): Boolean {
             try {
-                Files.lines(Paths.get("/proc/1/cgroup")).use { stream -> return stream.anyMatch { line: String -> line.contains("/docker") } }
+                Files.lines(Paths.get("/proc/1/cgroup")).use { stream -> return stream.anyMatch { line: String -> line.contains("/docker").also {
+                    LoggerFactory.getLogger(Application::class.java).info("Detected Docker Environment. Applying Docker specific settings.")
+                } } }
             } catch (e: IOException) {
                 return false
             }
