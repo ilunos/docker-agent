@@ -1,7 +1,7 @@
 package com.ilunos.agent.docker.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.ilunos.agent.docker.Application
+import com.ilunos.agent.docker.Ilunos
 import io.micronaut.core.version.VersionUtils
 import java.io.Serializable
 
@@ -23,7 +23,7 @@ data class Status(
 ) : Serializable {
 
     @JsonProperty("Version")
-    val version: String = Application.VERSION
+    val version: String = Ilunos.VERSION
 
     @JsonProperty("Micronaut-Version")
     val micronautVersion: String = VersionUtils.MICRONAUT_VERSION

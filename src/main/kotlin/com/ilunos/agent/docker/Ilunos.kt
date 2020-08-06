@@ -14,7 +14,7 @@ fun main(args: Array<String>) {
             .start()
 }
 
-class Application {
+class Ilunos {
     companion object {
         const val VERSION: String = "1.0.0"
         val isDocker: Boolean = isRunningInsideDocker()
@@ -22,7 +22,7 @@ class Application {
         private fun isRunningInsideDocker(): Boolean {
             try {
                 Files.lines(Paths.get("/proc/1/cgroup")).use { stream -> return stream.anyMatch { line: String -> line.contains("/docker").also {
-                    LoggerFactory.getLogger(Application::class.java).info("Detected Docker Environment. Applying Docker specific settings.")
+                    LoggerFactory.getLogger(Ilunos::class.java).info("Detected Docker Environment. Applying Docker specific settings.")
                 } } }
             } catch (e: IOException) {
                 return false

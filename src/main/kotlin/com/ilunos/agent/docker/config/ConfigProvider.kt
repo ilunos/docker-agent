@@ -1,6 +1,6 @@
 package com.ilunos.agent.docker.config
 
-import com.ilunos.agent.docker.Application
+import com.ilunos.agent.docker.Ilunos
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.constructor.Constructor
@@ -36,7 +36,7 @@ class ConfigProvider {
             }
 
             if (!exists()) {
-                if (Application.isDocker) {
+                if (Ilunos.isDocker) {
                     save(DockerConfig((System.getenv("ILUNOS_AUTO_CONNECT") ?: "true").toBoolean(),
                             System.getenv("ILUNOS_HOST") ?: "unix:///var/run/docker.sock"))
                 } else {
