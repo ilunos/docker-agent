@@ -170,10 +170,12 @@ class DockerContext(private val provider: ConfigProvider) {
 
         try {
             this.client = DockerClientBuilder.getInstance(clientConfig).withDockerHttpClient(httpClient).build()
+            client.pingCmd().exec()
+
             this.status = ConnectionStatus.CONNECTED
             logger.info("Connected to Docker System at ${provider.load().hostname}")
 
-        } catch (e: DockerException) {
+        } catch (e: Exception) {
             status = ConnectionStatus.FAILED
             logger.error("Failed to Connect to Docker System", e)
         }
