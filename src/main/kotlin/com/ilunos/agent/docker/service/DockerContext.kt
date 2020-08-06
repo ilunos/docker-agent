@@ -18,11 +18,15 @@ import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Infrastructure
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.util.*
 
 @Context
 @Infrastructure
 class DockerContext(private val provider: ConfigProvider) {
+
+    private val logger: Logger = LoggerFactory.getLogger(DockerContext::class.java)
 
     private lateinit var client: DockerClient
 
@@ -30,6 +34,7 @@ class DockerContext(private val provider: ConfigProvider) {
 
     init {
         if (provider.load().autoConnect) {
+            logger.info("Auto-Connect is enabled. Attempting to Connect to Docker System")
             GlobalScope.launch {
                 connect()
             }
@@ -166,14 +171,19 @@ class DockerContext(private val provider: ConfigProvider) {
         try {
             this.client = DockerClientBuilder.getInstance(clientConfig).withDockerHttpClient(httpClient).build()
             this.status = ConnectionStatus.CONNECTED
+            logger.info("Connected to Docker System at ${provider.load().hostname}")
+
         } catch (e: DockerException) {
             status = ConnectionStatus.FAILED
+            logger.error("Failed to Connect to Docker System", e)
         }
     }
 
     fun disconnect() {
-        if (::client.isInitialized)
+        if (::client.isInitialized) {
             this.client.close()
+            logger.info("Disconnected from Docker System")
+        }
 
         this.status = ConnectionStatus.DISCONNECTED
     }
