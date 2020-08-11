@@ -11,5 +11,5 @@ out/
 .project
 .settings
 .classpath
-config
+config/application.yml
 !config/templates
