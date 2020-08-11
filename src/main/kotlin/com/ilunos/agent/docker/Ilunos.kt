@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
 class Ilunos {
     companion object {
         const val VERSION: String = "1.0.0"
-        val isDocker: Boolean = isRunningInsideDocker()
+        val runningInDocker: Boolean = isRunningInsideDocker()
 
         private fun isRunningInsideDocker(): Boolean {
             try {
