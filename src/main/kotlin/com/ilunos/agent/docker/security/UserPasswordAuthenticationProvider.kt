@@ -14,7 +14,11 @@ class UserPasswordAuthenticationProvider : AuthenticationProvider {
     override fun authenticate(httpRequest: HttpRequest<*>?, authenticationRequest: AuthenticationRequest<*, *>): Publisher<AuthenticationResponse> {
         return Maybe.create { emitter: MaybeEmitter<AuthenticationResponse> ->
             if (authenticationRequest.identity == "admin" && authenticationRequest.secret == "admin") {
-                emitter.onSuccess(UserDetails("user", emptyList()))
+                emitter.onSuccess(UserDetails("user", listOf("DOCKER_AGENT_ADMIN", "DOCKER_AGENT_MANAGE", "DOCKER_AGENT_USER")))
+            } else if (authenticationRequest.identity == "manager" && authenticationRequest.secret == "manager") {
+                emitter.onSuccess(UserDetails("manager", listOf("DOCKER_AGENT_MANAGE", "DOCKER_AGENT_USER")))
+            } else if (authenticationRequest.identity == "user" && authenticationRequest.secret == "user") {
+                emitter.onSuccess(UserDetails("user", listOf("DOCKER_AGENT_USER")))
             } else {
                 emitter.onError(AuthenticationException(AuthenticationFailed()))
             }
