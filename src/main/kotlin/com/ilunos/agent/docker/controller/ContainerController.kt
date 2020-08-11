@@ -11,11 +11,13 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.*
 import io.micronaut.http.hateoas.JsonError
 import io.micronaut.http.hateoas.Link
+import io.micronaut.security.annotation.Secured
 import java.util.*
 import javax.inject.Inject
 import com.github.dockerjava.api.model.Container as RawContainer
 
 @Controller("/containers")
+@Secured("DOCKER_AGENT_USER")
 class ContainerController {
 
     @Inject
@@ -46,6 +48,7 @@ class ContainerController {
     }
 
     @Get("/{id}/start")
+    @Secured("DOCKER_AGENT_MANAGE")
     fun start(id: String): HttpResponse<Nothing> {
         if (docker.inspectContainer(id).state.running == true) throw ContainerAlreadyRunningException(id)
 
@@ -54,6 +57,7 @@ class ContainerController {
     }
 
     @Get("/{id}/stop")
+    @Secured("DOCKER_AGENT_MANAGE")
     fun stop(id: String): HttpResponse<Nothing> {
         if (docker.inspectContainer(id).state.running != true) throw ContainerAlreadyRunningException(id)
 
@@ -62,6 +66,7 @@ class ContainerController {
     }
 
     @Delete("/{id}{?force,volumes}")
+    @Secured("DOCKER_AGENT_ADMIN")
     fun delete(id: String, force: Optional<Boolean>, volumes: Optional<Boolean>): HttpResponse<Nothing> {
         docker.deleteContainer(id, force, volumes)
 

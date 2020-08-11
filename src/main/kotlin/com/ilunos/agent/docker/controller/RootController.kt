@@ -13,10 +13,12 @@ import io.micronaut.http.annotation.Error
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.hateoas.JsonError
 import io.micronaut.http.hateoas.Link
+import io.micronaut.security.annotation.Secured
 import java.util.*
 import javax.inject.Inject
 
 @Controller
+@Secured("DOCKER_AGENT_USER")
 class RootController {
 
     @Inject

@@ -8,10 +8,12 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Delete
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.QueryValue
+import io.micronaut.security.annotation.Secured
 import java.util.*
 import javax.inject.Inject
 
 @Controller("/images")
+@Secured("Docker_AGENT_USER")
 class ImageController {
 
     @Inject
@@ -28,6 +30,7 @@ class ImageController {
     }
 
     @Delete("{id}{?force,no-prune}")
+    @Secured("DOCKER_AGENT_ADMIN")
     fun delete(id: String, @QueryValue("force") force: Optional<Boolean>, @QueryValue("no-prune") noPrune: Optional<Boolean>): HttpResponse<Nothing> {
         docker.deleteImage(id, force, noPrune)
 

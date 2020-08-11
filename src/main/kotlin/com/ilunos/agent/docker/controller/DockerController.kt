@@ -5,9 +5,11 @@ import com.ilunos.agent.docker.service.DockerContext
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.security.annotation.Secured
 import javax.inject.Inject
 
 @Controller("/docker")
+@Secured("DOCKER_AGENT_ADMIN")
 class DockerController {
 
     @Inject

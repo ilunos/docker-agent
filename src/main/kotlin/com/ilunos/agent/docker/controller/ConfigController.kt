@@ -4,8 +4,10 @@ import com.ilunos.agent.docker.config.AgentConfig
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.security.annotation.Secured
 
 @Controller("/config")
+@Secured("DOCKER_AGENT_ADMIN")
 class ConfigController(private val agentConfig: AgentConfig) {
 
     @Get
