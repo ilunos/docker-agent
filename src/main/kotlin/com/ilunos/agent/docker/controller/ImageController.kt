@@ -13,7 +13,7 @@ import java.util.*
 import javax.inject.Inject
 
 @Controller("/images")
-@Secured("Docker_AGENT_USER")
+@Secured("DOCKER_AGENT_USER")
 class ImageController {
 
     @Inject
