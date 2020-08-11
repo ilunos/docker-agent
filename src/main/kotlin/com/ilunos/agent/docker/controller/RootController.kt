@@ -28,7 +28,7 @@ class RootController {
         val images = if (ping) docker.listImages() else emptyList()
         val containers = if (ping) docker.listContainers(Optional.of(true)) else emptyList()
 
-        return HttpResponse.ok(Status(docker.ping(), images.size, containers.size, containers.count { it.state == "running" }))
+        return HttpResponse.ok(Status(ping, images.size, containers.size, containers.count { it.state == "running" }))
     }
 
     @Error(AgentNotConnectedException::class, global = true)
