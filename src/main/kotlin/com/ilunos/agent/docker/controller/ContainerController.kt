@@ -48,7 +48,7 @@ class ContainerController {
     }
 
     @Get("/{id}/start")
-    @Secured("DOCKER_AGENT_MANAGE")
+    @Secured("DOCKER_AGENT_MANAGER")
     fun start(id: String): HttpResponse<Nothing> {
         if (docker.inspectContainer(id).state.running == true) throw ContainerAlreadyRunningException(id)
 
@@ -57,7 +57,7 @@ class ContainerController {
     }
 
     @Get("/{id}/stop")
-    @Secured("DOCKER_AGENT_MANAGE")
+    @Secured("DOCKER_AGENT_MANAGER")
     fun stop(id: String): HttpResponse<Nothing> {
         if (docker.inspectContainer(id).state.running != true) throw ContainerAlreadyRunningException(id)
 
