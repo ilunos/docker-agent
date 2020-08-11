@@ -49,7 +49,7 @@ micronaut:
     name: DockerAgent                     # Name of the Application. Do not change this or things will break
 
   server:
-    port: 8090                            # Server Port Change this if the Port is already in use
+    port: 8080                            # Server Port Change this if the Port is already in use
 
 
   ################################################################
