@@ -11,7 +11,7 @@ import com.github.dockerjava.api.model.Version
 import com.github.dockerjava.core.DefaultDockerClientConfig
 import com.github.dockerjava.core.DockerClientBuilder
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient
-import com.ilunos.agent.docker.config.ConfigProvider
+import com.ilunos.agent.docker.config.AgentConfig
 import com.ilunos.agent.docker.exception.AgentNotConnectedException
 import com.ilunos.agent.docker.model.ConnectionStatus
 import io.micronaut.context.annotation.Context
@@ -24,7 +24,7 @@ import java.util.*
 
 @Context
 @Infrastructure
-class DockerContext(private val provider: ConfigProvider) {
+class DockerContext(private val agentConfig: AgentConfig) {
 
     private val logger: Logger = LoggerFactory.getLogger(DockerContext::class.java)
 
@@ -33,7 +33,7 @@ class DockerContext(private val provider: ConfigProvider) {
     private var status: ConnectionStatus = ConnectionStatus.UNKNOWN
 
     init {
-        if (provider.load().autoConnect) {
+        if (agentConfig.autoConnect) {
             logger.info("Auto-Connect is enabled. Attempting to Connect to Docker System")
             GlobalScope.launch {
                 connect()
@@ -158,7 +158,7 @@ class DockerContext(private val provider: ConfigProvider) {
         disconnect()
 
         val clientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost(provider.load().hostname)
+                .withDockerHost(agentConfig.hostname)
                 .build()
 
         val httpClient = ApacheDockerHttpClient.Builder()
@@ -173,7 +173,7 @@ class DockerContext(private val provider: ConfigProvider) {
             client.pingCmd().exec()
 
             this.status = ConnectionStatus.CONNECTED
-            logger.info("Connected to Docker System at ${provider.load().hostname}")
+            logger.info("Connected to Docker System at ${agentConfig.hostname}")
 
         } catch (e: Exception) {
             status = ConnectionStatus.FAILED
