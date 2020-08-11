@@ -30,7 +30,7 @@ class DockerContext(private val provider: ConfigProvider) {
 
     private lateinit var client: DockerClient
 
-    var status: ConnectionStatus = ConnectionStatus.UNKNOWN
+    private var status: ConnectionStatus = ConnectionStatus.UNKNOWN
 
     init {
         if (provider.load().autoConnect) {
