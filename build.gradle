@@ -36,6 +36,8 @@ dependencies {
     implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut.security:micronaut-security")
+    implementation("io.micronaut.security:micronaut-security-oauth2")
+    implementation("io.micronaut.security:micronaut-security-jwt")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("com.github.docker-java:docker-java:3.2.5")
     implementation("com.github.docker-java:docker-java-transport-httpclient5:3.2.5")
