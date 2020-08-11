@@ -10,19 +10,15 @@ import javax.validation.constraints.NotNull
 
 @Introspected
 @ConfigurationProperties("agent")
-data class AgentConfig(
+class AgentConfig : Serializable {
 
-        @BooleanFlag
-        @JsonProperty("auto-connect")
-        var autoConnect: Boolean,
+    @BooleanFlag
+    @JsonProperty("auto-connect")
+    var autoConnect: Boolean = false
 
-        @NotNull
-        @JsonProperty("url")
-        var url: String
-
-) : Serializable {
-    constructor(config: AgentConfig) : this(config.autoConnect, config.url)
-    constructor() : this(true, "tcp://localhost:2375")
+    @NotNull
+    @JsonProperty("url")
+    var url: String = "tcp://localhost:2375"
 
     init {
         if (Ilunos.runningInDocker) {
