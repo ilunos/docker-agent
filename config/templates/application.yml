@@ -1,0 +1,116 @@
+################################################################
+###                    *** WARNING ***
+################################################################
+###
+### Use a proper text editor when editing this file.
+### Do not use tab characters in this file, use spaces.
+###
+### Keep at least one space after a colon, like so:
+###
+###   key: value
+###
+###
+### Never edit or add a value to lines that have no default value, like:
+###
+###   micronaut:
+###
+###
+### Just leave them be. A default value may be an empty string like so: ""
+###
+###
+### You can wrap most values into quotation marks, except numbers and booleans:
+###
+###   someUrl: "http://example.com"
+###   someToken: "123.qwe.456[DFG="
+###   somePortNumber: 22
+###   useSomeFeature: true
+###
+###
+### You can have a list of things like this:
+###
+###   listOfStrings: ["string1", "string2", "string3"]
+###
+### or like this:
+###
+###   listOfStrings:
+###     - "string1"
+###     - "string2"
+###     - "string3"
+###
+###
+### More information on correctly formatting yaml files: http://www.yaml.org/start.html
+
+################################################################
+###                 Basic configuration
+################################################################
+
+micronaut:
+  application:
+    name: DockerAgent                     # Name of the Application. Do not change this or things will break
+
+  server:
+    port: 8090                            # Server Port Change this if the Port is already in use
+
+
+  ################################################################
+  ###                 Security configuration
+  ################################################################
+
+  security:
+    enabled: true                         # Set this to false to turn off security completely (NOT RECOMMENDED)
+    reject-not-found: false               # Set to true to return a 401 instead of 404 on pages not found
+    authentication: idtoken               # Comment out this line if you do not use keycloak
+
+    basic-auth:
+      enabled: false                      # Enable the builtin admin:admin development account.
+
+    oauth2:
+      clients:
+        keycloak:
+          enabled: true                   # Set to false to disable keycloak authentication.
+          client-id: docker-agent         # Client id of the client generated in keycloak
+          client-secret: <client-secret>  # Put your generated client secret here if you are using access_type = confidential
+          openid:
+            issuer: <http://issuer/url>   # Url to the Issuer, includes the Realm
+
+    # This is the default security map, requiring all clients to be authenticated with any account at all to use any resource
+    # generally this should not be touched, if you wish to disable security use the micronaut.security.enable setting above
+    intercept-url-map:
+      -
+        pattern: /**
+        access:
+          - isAuthenticated()
+
+
+  ################################################################
+  ###                 Routing configuration
+  ################################################################
+
+  router:
+    versioning:
+      enabled: true                       # Set this to false to disable the legacy V0 API Endpoints.
+      default-version: 1                  # Default version to assume if none is presented. This should not be changed as it will break things
+      header:
+        enabled: true                     # Allows the version to be specified in the Header
+        names:                            # A list of Header Names which will be accepted as Version Headers, only one of these needs to be present
+          - X-API-VERSION
+          - Accept-Version
+
+
+################################################################
+###                 Agent configuration
+################################################################
+
+agent:
+
+  # Url to connect to the Docker Engine
+  # This can be in one of 3 formats
+  #
+  # 1. Unix Socket:     unix:///var/run/docker.sock     (Path might differ)
+  # 2. Windows npipe:   npipe:////./pipe/docker_engine
+  # 3. TCP connect      tcp://Hostname:Port
+  #
+  # TCP does currently not support TLS authenticated against the Docker Engine
+  # and would require to open an unsecured tcp port on your machine.
+  url: unix:///var/run/docker.sock
+  auto-connect: true                      # Set to true to attempt to connect to the docker system at startup
