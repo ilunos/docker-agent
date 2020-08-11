@@ -6,10 +6,12 @@ Agent used to connect a Docker environment into the Ilunos eco system.
 You will need JDK 14 then just run `gradlew build` on windows and `./gradlew build` on linux  
 The result will be in `build/libs/docker-agent-[VERSION]-all.jar`
 
-After that you can run `docker build -t ilunos/docker-agent .` to create a docker image with the agent.
-
 ## Running
 There multiple ways to use the Docker Agent, currently the Agent only supports **one** Docker system only
+
+By default, the Docker Agent expects a Keycloak Server used for Authentication & Authorization.
+In the default configuration file the keycloak is not configured and will crash the application.   
+To disable this you can set `micronaut.security.oauth2.clients.keycloak.enabled` to false in the config.
 
 ### Docker Container
 You can run the Agent directly inside of the Docker environment you wish to manage.
@@ -20,12 +22,20 @@ The container will have **full** access to the Docker environment.
 When running the Agent in a container it will automatically pick up on this, and the default configuration will look for the socket file at `/var/run/docker.sock`.
 If your mounting path is different you will have to change the config.
 
-TODO: Running Agent in Docker Environment
+If you have built the application locally you can simply run: `docker build -f Dockerfile -t ilunos/docker-agent .`   
+or `docker build -f Build.Dockerfile -t ilunos/docker-agent .`
+if you do not have java 14 installed and cannot build the application locally
+
+Running the application `docker run -v /var/run/docker.sock:/var/run/docker.sock ilunos/docker-agent`  
+
+To edit the config from the defaults either mount a config file `-v myConfigDir:config`   
+or set the individual configs with environment Variables e.g: `-e MICRONAUT_SERVER_PORT=80` for `micronaut.server.port`
 
 Upsides:
 - Easy deployment
 
 Downsides:
+- Host System must be the same as Docker Environment
 - Dies with Docker
 - Need to mount docker.sock file into container
 
