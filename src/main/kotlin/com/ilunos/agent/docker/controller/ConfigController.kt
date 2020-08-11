@@ -18,16 +18,6 @@ class ConfigController(private val provider: ConfigProvider) {
     @Post
     fun set(config: DockerConfig): HttpResponse<DockerConfig> {
         provider.save(config)
-
-        return HttpResponse.ok(config)
-    }
-
-    @Post("/hostname")
-    fun setHost(hostname: String): HttpResponse<DockerConfig> {
-        val config = provider.load()
-        config.hostname = hostname
-
-        provider.save(config)
         return HttpResponse.ok(config)
     }
 }
