@@ -158,7 +158,7 @@ class DockerContext(private val agentConfig: AgentConfig) {
         disconnect()
 
         val clientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost(agentConfig.hostname)
+                .withDockerHost(agentConfig.url)
                 .build()
 
         val httpClient = ApacheDockerHttpClient.Builder()
@@ -173,7 +173,7 @@ class DockerContext(private val agentConfig: AgentConfig) {
             client.pingCmd().exec()
 
             this.status = ConnectionStatus.CONNECTED
-            logger.info("Connected to Docker System at ${agentConfig.hostname}")
+            logger.info("Connected to Docker System at ${agentConfig.url}")
 
         } catch (e: Exception) {
             status = ConnectionStatus.FAILED

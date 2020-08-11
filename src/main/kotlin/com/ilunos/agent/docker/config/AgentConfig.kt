@@ -18,16 +18,16 @@ data class AgentConfig(
 
         @NotNull
         @JsonProperty("url")
-        var hostname: String
+        var url: String
 
 ) : Serializable {
-    constructor(config: AgentConfig) : this(config.autoConnect, config.hostname)
+    constructor(config: AgentConfig) : this(config.autoConnect, config.url)
     constructor() : this(true, "tcp://localhost:2375")
 
     init {
         if (Ilunos.runningInDocker) {
             autoConnect = true
-            hostname = "unix:///var/run/docker.sock"
+            url = "unix:///var/run/docker.sock"
         }
     }
 }
