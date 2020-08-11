@@ -65,9 +65,9 @@ micronaut:
       enabled: false                      # Enable the builtin admin:admin development account.
 
     oauth2:
+      enabled: true                       # Set to false to disable oauth2 / keycloak authentication.
       clients:
         keycloak:
-          enabled: true                   # Set to false to disable keycloak authentication.
           client-id: docker-agent         # Client id of the client generated in keycloak
           client-secret: <client-secret>  # Put your generated client secret here if you are using access_type = confidential
           openid:

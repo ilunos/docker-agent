@@ -11,7 +11,7 @@ There multiple ways to use the Docker Agent, currently the Agent only supports *
 
 By default, the Docker Agent expects a Keycloak Server used for Authentication & Authorization.
 In the default configuration file the keycloak is not configured and will crash the application.   
-To disable this you can set `micronaut.security.oauth2.clients.keycloak.enabled` to false in the config.
+To disable this you can set `micronaut.security.oauth2.enabled` to false in the config.
 
 ### Docker Container
 You can run the Agent directly inside of the Docker environment you wish to manage.
