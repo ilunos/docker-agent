@@ -26,5 +26,5 @@ data class Status(
     val version: String = Ilunos.VERSION
 
     @JsonProperty("Micronaut-Version")
-    val micronautVersion: String = VersionUtils.MICRONAUT_VERSION
+    val micronautVersion: String = VersionUtils.MICRONAUT_VERSION ?: "UNKNOWN"
 }
