@@ -7,6 +7,9 @@ import io.micronaut.context.env.Environment
 import io.micronaut.context.exceptions.BeanInstantiationException
 import io.micronaut.runtime.Micronaut.build
 import io.micronaut.security.oauth2.client.DefaultOpenIdProviderMetadata
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.file.Files
@@ -59,6 +62,19 @@ class Ilunos(context: ApplicationContext, environment: Environment) {
             }
 
             logger.warn("!!! ⚠⚠ Running Agent without Security ⚠⚠ !!! This is not recommended as everyone with access to the agent will be able to control docker!")
+        }
+
+        if (canReboot())
+            logger.info("Detected Bootloader. Enabling Reboot features...")
+    }
+
+    fun canReboot(): Boolean = System.getProperty("bootloader.loaded") != null
+
+    fun tryReboot() = shutdown(302)
+    fun shutdown(exitCode: Int = 205) {
+        GlobalScope.launch {
+            delay(500)
+            exitProcess(exitCode)
         }
     }
 
