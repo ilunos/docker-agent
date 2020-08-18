@@ -6,4 +6,6 @@ gradle
 
 build
 !build/libs/docker-agent-*-all.jar
-config/application.yml
+
+config
+!config/templates
