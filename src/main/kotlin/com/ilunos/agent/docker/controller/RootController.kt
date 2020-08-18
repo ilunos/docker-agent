@@ -2,6 +2,7 @@ package com.ilunos.agent.docker.controller
 
 import com.github.dockerjava.api.exception.ConflictException
 import com.github.dockerjava.api.exception.NotFoundException
+import com.ilunos.agent.docker.Ilunos
 import com.ilunos.agent.docker.exception.AgentNotConnectedException
 import com.ilunos.agent.docker.model.Status
 import com.ilunos.agent.docker.service.DockerContext
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 @Controller
 @Secured("DOCKER_AGENT_USER")
-class RootController {
+class RootController(private val ilunos: Ilunos) {
 
     @Inject
     private lateinit var docker: DockerContext
@@ -31,6 +32,22 @@ class RootController {
         val containers = if (ping) docker.listContainers(Optional.of(true)) else emptyList()
 
         return HttpResponse.ok(Status(ping, images.size, containers.size, containers.count { it.state == "running" }))
+    }
+
+    @Get("/shutdown")
+    @Secured("DOCKER_AGENT_ADMIN")
+    fun shutdown(): HttpResponse<Any> {
+        return HttpResponse.ok<Any>().also { ilunos.shutdown() }
+    }
+
+
+    @Get("/reboot")
+    @Secured("DOCKER_AGENT_ADMIN")
+    fun reboot(): HttpResponse<Any> {
+        if (!ilunos.canReboot())
+            return HttpResponse.status<Any>(HttpStatus.SERVICE_UNAVAILABLE).body(JsonError("Cannot reboot, Agent not started with a Bootloader!"))
+
+        return HttpResponse.ok<Any>().also { ilunos.tryReboot() }
     }
 
     @Error(AgentNotConnectedException::class, global = true)
