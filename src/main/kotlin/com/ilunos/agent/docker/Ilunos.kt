@@ -65,18 +65,18 @@ class Ilunos(context: ApplicationContext, environment: Environment) {
     companion object {
         const val VERSION: String = "1.0.0"
         private val logger = LoggerFactory.getLogger(Ilunos::class.java)
-        val runningInDocker: Boolean = isRunningInsideDocker()
+        val runningInDocker = isRunningInsideDocker()
 
         private fun isRunningInsideDocker(): Boolean {
             try {
                 Files.lines(Paths.get("/proc/1/cgroup")).use { stream ->
                     return stream.anyMatch { line: String ->
-                        line.contains("/docker").also {
-                            if (it)
-                                logger.info("Detected Docker Environment. Applying Docker specific settings.")
-                            else
-                                logger.info("Running Docker-Agent in default mode")
-                        }
+                        line.contains("/docker")
+                    }.also {
+                        if (it)
+                            logger.info("Detected Docker Environment. Applying Docker specific settings.")
+                        else
+                            logger.info("Running Docker-Agent in default mode")
                     }
                 }
             } catch (e: IOException) {
