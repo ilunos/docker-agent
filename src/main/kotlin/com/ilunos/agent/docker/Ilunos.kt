@@ -45,13 +45,13 @@ class Ilunos(context: ApplicationContext, environment: Environment) {
                     context.getBean(DefaultOpenIdProviderMetadata::class.java)
                 } catch (e: BeanInstantiationException) {
                     logger.error("Unable to communicate with OpenId Provider: ${e.cause?.cause?.message}")
-                    exitProcess(206)
+                    exitProcess(406)
                 }
             }
 
             if (!basicAuth && !oauthAuth) {
                 logger.error("Neither Basic Auth or OAuth2 is enabled, At least one required! Please enable one AuthProvider or disable Security.")
-                exitProcess(205)
+                exitProcess(405)
             }
         } else {
             if (basicAuth || oauthAuth) {
