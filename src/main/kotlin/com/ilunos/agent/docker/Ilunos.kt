@@ -1,5 +1,6 @@
 package com.ilunos.agent.docker
 
+import com.ilunos.agent.docker.util.FileUtils
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.env.Environment
@@ -14,8 +15,13 @@ import kotlin.system.exitProcess
 
 
 fun main(args: Array<String>) {
-    build()
-            .args(*args)
+    val propertiesPath = "config/docker-agent.properties"
+    if (!FileUtils.exists(propertiesPath)) {
+        FileUtils.copyTemplate("docker-agent.properties", propertiesPath)
+    }
+
+    System.setProperty(Environment.PROPERTY_SOURCES_KEY, "file:$propertiesPath")
+    build().args(*args)
             .packages("com.ilunos.agent.docker")
             .start()
 }
