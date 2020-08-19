@@ -21,7 +21,7 @@ class Bootloader : Runnable {
     var exitCode: Int = 302
 
     @Option(names = ["-d", "--directory"], description = ["Sets the working directory of the child process", "Default: Current working directory"])
-    var workingDirectory: File = File("../")
+    var workingDirectory: File = File(".")
 
     private var recentBoots = 0
     private var lastBoot = 0L
