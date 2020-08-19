@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm") version "1.4.0"
     kotlin("kapt") version "1.4.0"
-    id("com.github.johnrengelman.shadow") version "6.0.0"
+    id("com.github.johnrengelman.shadow") version "5.2.0"
     application
 }
 
@@ -29,5 +29,10 @@ tasks {
         arguments {
             arg("project", "${project.group}/${project.name}")
         }
+    }
+
+    shadowJar {
+        mergeServiceFiles()
+        minimize()
     }
 }
