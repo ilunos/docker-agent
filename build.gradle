@@ -83,6 +83,7 @@ compileTestKotlin {
     }
 }
 kapt {
+    correctErrorTypes = true
     arguments {
         arg("micronaut.processing.incremental", true)
         arg("micronaut.processing.annotations", "com.ilunos.agent.docker.*")
