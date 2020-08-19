@@ -20,6 +20,9 @@ class Bootloader : Runnable {
     @Option(names = ["-e", "--exit-code"], description = ["The exit code on which the application will be restarted"], defaultValue = "302")
     var exitCode: Int = 302
 
+    @Option(names = ["-d", "--directory"], description = ["Sets the working directory of the child process", "Default: Current working directory"])
+    var workingDirectory: File = File("../")
+
     private var recentBoots = 0
     private var lastBoot = 0L
 
@@ -38,6 +41,7 @@ class Bootloader : Runnable {
 
         logger.info("Configuration loaded:")
         logger.info("File      : ${file.absolutePath}")
+        logger.info("Directory : ${workingDirectory.absolutePath}")
         logger.info("Arguments : $arguments")
         logger.info("Exit-Code : $exitCode")
 
@@ -83,6 +87,7 @@ class Bootloader : Runnable {
 
         val pb = ProcessBuilder().inheritIO()
         pb.command(command())
+        pb.directory(workingDirectory)
 
         return pb.start()
     }
