@@ -62,10 +62,10 @@ micronaut:
     authentication: idtoken               # Comment out this line if you do not use keycloak
 
     basic-auth:
-      enabled: false                      # Enable the builtin admin:admin development account.
+      enabled: true                       # Enable the builtin admin:admin development account.
 
     oauth2:
-      enabled: true                       # Set to false to disable oauth2 / keycloak authentication.
+      enabled: false                      # Set to false to disable oauth2 / keycloak authentication.
       clients:
         keycloak:
           client-id: docker-agent         # Client id of the client generated in keycloak
