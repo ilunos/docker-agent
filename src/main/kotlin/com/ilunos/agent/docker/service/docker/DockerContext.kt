@@ -1,4 +1,4 @@
-package com.ilunos.agent.docker.service
+package com.ilunos.agent.docker.service.docker
 
 import com.github.dockerjava.api.DockerClient
 import com.github.dockerjava.api.command.InspectContainerResponse
