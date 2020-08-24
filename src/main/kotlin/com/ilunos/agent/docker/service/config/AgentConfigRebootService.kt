@@ -7,6 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
 import java.nio.file.FileSystems
+import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardWatchEventKinds
 
@@ -18,15 +19,26 @@ class AgentConfigRebootService(private val ilunos: Ilunos) {
 
     private val watchService = FileSystems.getDefault().newWatchService()
     private val directory: Path = Path.of("config").toAbsolutePath()
-    private val file = directory.resolve("docker-agent.properties")
+    private val file = directory.resolve("application.yml")
 
     private var running = true
 
     init {
-        directory.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY)
-        logger.info("Registered $directory to FileWatchService")
+        initialize()
+    }
 
-        logger.debug("Launching FileWatch Service")
+    private fun initialize() {
+        logger.debug("Bootloader detected! Initializing ${AgentConfigRebootService::class.simpleName}...")
+
+        if (Files.notExists(file)) {
+            logger.warn("Unable to launch ${AgentConfigRebootService::class.simpleName}, target file at ${file.toAbsolutePath()} does not exist!")
+            return
+        }
+
+        directory.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY)
+        logger.debug("Registered $directory to ${AgentConfigRebootService::class.simpleName}")
+
+        logger.info("Starting ${AgentConfigRebootService::class.simpleName}")
         GlobalScope.launch { run() }
     }
 
