@@ -12,9 +12,9 @@ import java.nio.file.StandardWatchEventKinds
 
 @Context
 @Requires(property = "bootloader.loaded")
-class AgentPropertiesFileWatcher(private val ilunos: Ilunos) {
+class AgentConfigRebootService(private val ilunos: Ilunos) {
 
-    private val logger = LoggerFactory.getLogger(AgentPropertiesFileWatcher::class.java)
+    private val logger = LoggerFactory.getLogger(AgentConfigRebootService::class.java)
 
     private val watchService = FileSystems.getDefault().newWatchService()
     private val directory: Path = Path.of("config").toAbsolutePath()
