@@ -18,12 +18,11 @@ import kotlin.system.exitProcess
 
 
 fun main(args: Array<String>) {
-    val propertiesPath = "config/docker-agent.properties"
+    val propertiesPath = "config/application.yml"
     if (!FileUtils.exists(propertiesPath)) {
-        FileUtils.copyTemplate("docker-agent.properties", propertiesPath)
+        FileUtils.copyTemplate("templates/application.yml", propertiesPath)
     }
 
-    System.setProperty(Environment.PROPERTY_SOURCES_KEY, "file:$propertiesPath")
     build().args(*args)
             .packages("com.ilunos.agent.docker")
             .start()

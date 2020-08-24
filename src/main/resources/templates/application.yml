@@ -59,13 +59,13 @@ micronaut:
   security:
     enabled: true                         # Set this to false to turn off security completely (NOT RECOMMENDED)
     reject-not-found: false               # Set to true to return a 401 instead of 404 on pages not found
-    authentication: idtoken               # Comment out this line if you do not use keycloak
+    authentication: idtoken               # Authentication type, used by keycloak. Should not be changed
 
     basic-auth:
-      enabled: true                       # Enable the builtin admin:admin development account.
+      enabled: true                       # Set to false to disable the builtin admin:admin development account.
 
     oauth2:
-      enabled: false                      # Set to false to disable oauth2 / keycloak authentication.
+      enabled: false                      # Set to true to enable oauth2 / keycloak authentication.
       clients:
         keycloak:
           client-id: docker-agent         # Client id of the client generated in keycloak
@@ -113,4 +113,4 @@ agent:
   # TCP does currently not support TLS authenticated against the Docker Engine
   # and would require to open an unsecured tcp port on your machine.
   url: unix:///var/run/docker.sock
-  auto-connect: true                      # Set to true to attempt to connect to the docker system at startup
+  auto-connect: false                     # Set to true to attempt to connect to the docker system at startup
