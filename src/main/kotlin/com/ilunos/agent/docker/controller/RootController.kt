@@ -15,6 +15,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.hateoas.JsonError
 import io.micronaut.http.hateoas.Link
 import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
 import java.util.*
 import javax.inject.Inject
 
@@ -48,6 +49,12 @@ class RootController(private val ilunos: Ilunos) {
             return HttpResponse.status<Any>(HttpStatus.SERVICE_UNAVAILABLE).body(JsonError("Cannot reboot, Agent not started with a Bootloader!"))
 
         return HttpResponse.ok<Any>().also { ilunos.tryReboot() }
+    }
+
+    @Get("/heartbeat")
+    @Secured(SecurityRule.IS_ANONYMOUS)
+    fun heartbeat(): HttpResponse<Any> {
+        return HttpResponse.ok()
     }
 
     @Error(AgentNotConnectedException::class, global = true)
