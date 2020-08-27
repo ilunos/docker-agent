@@ -17,5 +17,5 @@ build/
 target/
 out/
 
-config/
-!config/templates
+config/**
+!config/*.kt

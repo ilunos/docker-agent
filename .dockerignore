@@ -7,5 +7,5 @@ gradle
 build
 !build/libs/docker-agent-*-all.jar
 
-config
-!config/templates
+config/
+!config/*.kt
