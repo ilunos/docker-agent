@@ -114,3 +114,11 @@ agent:
   # and would require to open an unsecured tcp port on your machine.
   url: unix:///var/run/docker.sock
   auto-connect: false                     # Set to true to attempt to connect to the docker system at startup
+
+# Uncomment the following to enable the Agent auto-registering itself to an Orchestrator
+# url is required but token is optional.
+# Set token to the value of micronaut.security.register-token in your orchestrator configuration
+# !If token is not being used remove or leave the token line commented out!
+#  orchestrator:
+#    url: http://localhost:8080
+#    token: my-super-secure-registration-password
