@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class UserPasswordAuthenticationProvider : AuthenticationProvider {
+class DevelopmentAuthenticationProvider : AuthenticationProvider {
 
     override fun authenticate(httpRequest: HttpRequest<*>?, authenticationRequest: AuthenticationRequest<*, *>): Publisher<AuthenticationResponse> {
         return Maybe.create { emitter: MaybeEmitter<AuthenticationResponse> ->
