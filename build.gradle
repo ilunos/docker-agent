@@ -88,7 +88,7 @@ kapt {
         arg("micronaut.processing.incremental", true)
         arg("micronaut.processing.annotations", "com.ilunos.agent.docker.*")
         arg("micronaut.processing.group", "com.ilunos.agent.docker")
-        arg("micronaut.processing.module", "DockerAgent")
+        arg("micronaut.processing.module", "Docker-Agent")
     }
 }
 

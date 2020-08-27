@@ -80,7 +80,8 @@ class Ilunos(context: ApplicationContext, environment: Environment) {
     companion object {
         const val VERSION: String = "1.0.0"
         private val logger = LoggerFactory.getLogger(Ilunos::class.java)
-        val runningInDocker = isRunningInsideDocker()
+        val isDocker = isRunningInsideDocker()
+        val isWindows = System.getProperty("os.name").contains("Windows")
 
         private fun isRunningInsideDocker(): Boolean {
             try {

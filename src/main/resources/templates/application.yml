@@ -46,9 +46,10 @@
 
 micronaut:
   application:
-    name: DockerAgent                     # Name of the Application. Do not change this or things will break
+    name: Docker-Agent
 
   server:
+    host: localhost                       # Hostname of the Agent. This will probably not be localhost in any production environment
     port: 8885                            # Server Port Change this if the Port is already in use
 
 
@@ -73,11 +74,8 @@ micronaut:
           openid:
             issuer: <http://issuer/url>   # Url to the Issuer, includes the Realm
 
-    # This is the default security map, requiring all clients to be authenticated with any account at all to use any resource
-    # generally this should not be touched, if you wish to disable security use the micronaut.security.enable setting above
     intercept-url-map:
-      -
-        pattern: /**
+      - pattern: /**
         access:
           - isAuthenticated()
 
@@ -89,10 +87,10 @@ micronaut:
   router:
     versioning:
       enabled: true                       # Set this to false to disable the legacy V0 API Endpoints.
-      default-version: 1                  # Default version to assume if none is presented. This should not be changed as it will break things
+      default-version: 1
       header:
-        enabled: true                     # Allows the version to be specified in the Header
-        names:                            # A list of Header Names which will be accepted as Version Headers, only one of these needs to be present
+        enabled: true
+        names:
           - X-API-VERSION
           - Accept-Version
 
@@ -103,22 +101,28 @@ micronaut:
 
 agent:
 
-  # Url to connect to the Docker Engine
+  # Override the Url to connect to the Docker Engine
   # This can be in one of 3 formats
   #
-  # 1. Unix Socket:     unix:///var/run/docker.sock     (Path might differ)
+  # 1. Unix Socket:     unix:///var/run/docker.sock
   # 2. Windows npipe:   npipe:////./pipe/docker_engine
   # 3. TCP connect      tcp://Hostname:Port
   #
+  # Note: The System will attempt to set the url depending on your os if not manually specified
+  #
   # TCP does currently not support TLS authenticated against the Docker Engine
   # and would require to open an unsecured tcp port on your machine.
-  url: unix:///var/run/docker.sock
-  auto-connect: false                     # Set to true to attempt to connect to the docker system at startup
+  # url: unix:///var/run/docker.sock
 
-# Uncomment the following to enable the Agent auto-registering itself to an Orchestrator
-# url is required but token is optional.
-# Set token to the value of micronaut.security.register-token in your orchestrator configuration
-# !If token is not being used remove or leave the token line commented out!
-#  orchestrator:
-#    url: http://localhost:8080
-#    token: my-super-secure-registration-password
+  # Attempt to connect to the specified docker url above on startup.
+  # If disabled you will manually call the /docker/connect endpoint to initiate the connection
+  # auto-connect: true
+
+  orchestrator:
+
+  # Base Url of the Orchestrator, The orchestrator needs to live somewhere from where it can reach the agent
+  # url: http://localhost:8080
+
+  # Set to the value of micronaut.security.register-token from your orchestrator configuration
+  # !If token is not being used remove or leave commented out!
+  # token: my-super-secure-registration-password
