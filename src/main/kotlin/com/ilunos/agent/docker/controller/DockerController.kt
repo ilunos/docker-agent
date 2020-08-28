@@ -1,7 +1,7 @@
 package com.ilunos.agent.docker.controller
 
 import com.ilunos.agent.docker.model.DockerInfo
-import com.ilunos.agent.docker.service.docker.DockerContext
+import com.ilunos.agent.docker.service.DockerContext
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get

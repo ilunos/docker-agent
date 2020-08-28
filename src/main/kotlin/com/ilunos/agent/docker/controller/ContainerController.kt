@@ -4,7 +4,7 @@ import com.github.dockerjava.api.command.InspectContainerResponse
 import com.ilunos.agent.docker.exception.ContainerAlreadyRunningException
 import com.ilunos.agent.docker.exception.ContainerNotRunningException
 import com.ilunos.agent.docker.model.Container
-import com.ilunos.agent.docker.service.docker.DockerContext
+import com.ilunos.agent.docker.service.DockerContext
 import io.micronaut.core.version.annotation.Version
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus

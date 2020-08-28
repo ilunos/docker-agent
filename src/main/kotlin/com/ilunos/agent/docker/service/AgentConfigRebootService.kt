@@ -1,4 +1,4 @@
-package com.ilunos.agent.docker.service.config
+package com.ilunos.agent.docker.service
 
 import com.ilunos.agent.docker.Ilunos
 import io.micronaut.context.annotation.Context

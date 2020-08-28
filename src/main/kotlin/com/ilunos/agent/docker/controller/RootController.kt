@@ -5,7 +5,7 @@ import com.github.dockerjava.api.exception.NotFoundException
 import com.ilunos.agent.docker.Ilunos
 import com.ilunos.agent.docker.exception.AgentNotConnectedException
 import com.ilunos.agent.docker.model.Status
-import com.ilunos.agent.docker.service.docker.DockerContext
+import com.ilunos.agent.docker.service.DockerContext
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
