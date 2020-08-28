@@ -118,6 +118,19 @@ agent:
   # If disabled you will manually call the /docker/connect endpoint to initiate the connection
   # auto-connect: true
 
+  ssl:
+
+    # type of SSL configuration. Can be 'none', 'keystore' or 'pem_files'
+    # Setting this to none disables SSL configuration
+    type: none
+
+    keystore-file:                        # Path to either a .jks or .pkcs12 file.
+    keystore-pass:                        # Password for the keystore or pkcs12 file.
+
+    # Path to a directory containing a ca.pem, key.pem & cert.pem
+    # These files must be named and have the file extension as described above!
+    pem-directory:
+
   orchestrator:
 
   # Base Url of the Orchestrator, The orchestrator needs to live somewhere from where it can reach the agent
