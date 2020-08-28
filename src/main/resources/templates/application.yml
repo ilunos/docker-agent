@@ -115,7 +115,7 @@ agent:
   # url: unix:///var/run/docker.sock
 
   # Attempt to connect to the specified docker url above on startup.
-  # If disabled you will manually call the /docker/connect endpoint to initiate the connection
+  # If disabled you will need to manually call the /docker/connect endpoint to initiate the connection
   # auto-connect: true
 
   orchestrator:

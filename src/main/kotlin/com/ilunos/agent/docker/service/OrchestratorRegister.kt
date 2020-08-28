@@ -46,7 +46,7 @@ class OrchestratorRegister(
                 logger.error("Failed to register at Orchestrator ${config.url}, Status: ${it.status}")
             }
         }, {
-            logger.error("Failed to register at Orchestrator!", it)
+            logger.error("Failed to register at Orchestrator! Is it Running and reachable?", it)
         })
     }
 }
