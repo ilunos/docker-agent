@@ -11,6 +11,8 @@ class OrchestratorConfig {
 
     lateinit var url: URI
 
+    var enabled: Boolean = false
+
     @Nullable
     var token: String? = null
 }

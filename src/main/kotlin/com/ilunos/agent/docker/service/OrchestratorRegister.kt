@@ -23,7 +23,8 @@ class OrchestratorRegister(
     private val logger = LoggerFactory.getLogger(OrchestratorRegister::class.java)
 
     init {
-        initialize()
+        if (config.enabled)
+            initialize()
     }
 
     private fun initialize() {
