@@ -61,7 +61,10 @@ class DockerContextBuilder(private val agentConfig: AgentConfig, private val age
             throw ConfigurationException("Property 'agent.ssl.pem-directory' does not exist or is not a directory!")
 
         logger.debug("Using PemDirectory at '$directory'")
-        return builder.withCustomSslConfig(LocalDirectorySSLConfig(directory.toAbsolutePath().toString())).build()
+        return builder
+                .withCustomSslConfig(LocalDirectorySSLConfig(directory.toAbsolutePath().toString()))
+                .withDockerTlsVerify(true)
+                .build()
     }
 
 
