@@ -1,10 +1,7 @@
 package com.ilunos.agent.docker.service
 
 import com.github.dockerjava.api.DockerClient
-import com.github.dockerjava.core.DefaultDockerClientConfig
-import com.github.dockerjava.core.DockerClientBuilder
-import com.github.dockerjava.core.DockerClientConfig
-import com.github.dockerjava.core.LocalDirectorySSLConfig
+import com.github.dockerjava.core.*
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient
 import com.ilunos.agent.docker.config.AgentConfig
 import com.ilunos.agent.docker.config.AgentSSLConfig
@@ -27,7 +24,7 @@ class DockerContextBuilder(private val agentConfig: AgentConfig, private val age
                 .sslConfig(clientConfig.sslConfig)
                 .build()
 
-        return DockerClientBuilder.getInstance(clientConfig).withDockerHttpClient(httpClient).build()
+        return DockerClientImpl.getInstance(clientConfig, httpClient)
     }
 
 
