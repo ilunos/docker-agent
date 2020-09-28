@@ -120,9 +120,9 @@ agent:
 
   orchestrator:
 
-  # Base Url of the Orchestrator, The orchestrator needs to live somewhere from where it can reach the agent
-  # url: http://localhost:8080
+    # Base Url of the Orchestrator, The orchestrator needs to live somewhere from where it can reach the agent
+    # url: http://localhost:8080
 
-  # Set to the value of micronaut.security.register-token from your orchestrator configuration
-  # !If token is not being used remove or leave commented out!
-  # token: my-super-secure-registration-password
+    # Set to the value of micronaut.security.register-token from your orchestrator configuration
+    # !If token is not being used remove or leave commented out!
+    # token: my-super-secure-registration-password
