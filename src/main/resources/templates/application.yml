@@ -112,11 +112,11 @@ agent:
   #
   # TCP does currently not support TLS authenticated against the Docker Engine
   # and would require to open an unsecured tcp port on your machine.
-  # url: unix:///var/run/docker.sock
+  url: unix:///var/run/docker.sock
 
   # Attempt to connect to the specified docker url above on startup.
   # If disabled you will manually call the /docker/connect endpoint to initiate the connection
-  # auto-connect: true
+  auto-connect: true
 
   ssl:
 
@@ -134,9 +134,9 @@ agent:
   orchestrator:
     enabled: false
 
-  # Base Url of the Orchestrator, The orchestrator needs to live somewhere from where it can reach the agent
-  url: http://localhost:8080
+    # Base Url of the Orchestrator, The orchestrator needs to live somewhere from where it can reach the agent
+    url: http://localhost:8080
 
-  # Set to the value of micronaut.security.register-token from your orchestrator configuration
-  # !If token is not being used remove or leave commented out!
-  token: my-super-secure-registration-password
+    # Set to the value of micronaut.security.register-token from your orchestrator configuration
+    # !If token is not being used remove or leave commented out!
+    token: my-super-secure-registration-password
