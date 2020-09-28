@@ -1,6 +1,6 @@
 package com.ilunos.agent.docker
 
-import com.ilunos.agent.docker.util.FileUtils
+import com.ilunos.agent.docker.util.ConfigUtils
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.env.Environment
@@ -18,10 +18,7 @@ import kotlin.system.exitProcess
 
 
 fun main(args: Array<String>) {
-    val propertiesPath = "config/application.yml"
-    if (!FileUtils.exists(propertiesPath)) {
-        FileUtils.copyTemplate("templates/application.yml", propertiesPath)
-    }
+    ConfigUtils.initialize()
 
     build().args(*args)
             .packages("com.ilunos.agent.docker")
