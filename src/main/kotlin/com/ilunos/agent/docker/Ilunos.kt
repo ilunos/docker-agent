@@ -1,6 +1,6 @@
 package com.ilunos.agent.docker
 
-import com.ilunos.agent.docker.util.ConfigUtils
+import com.ilunos.common.config.ConfigUtils
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.env.Environment

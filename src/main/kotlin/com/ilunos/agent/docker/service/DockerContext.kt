@@ -8,10 +8,8 @@ import com.github.dockerjava.api.model.Container
 import com.github.dockerjava.api.model.Image
 import com.github.dockerjava.api.model.Info
 import com.github.dockerjava.api.model.Version
-import com.github.dockerjava.core.DefaultDockerClientConfig
-import com.github.dockerjava.core.DockerClientBuilder
-import com.github.dockerjava.httpclient5.ApacheDockerHttpClient
 import com.ilunos.agent.docker.config.AgentConfig
+import com.ilunos.agent.docker.config.AgentSSLConfig
 import com.ilunos.agent.docker.exception.AgentNotConnectedException
 import com.ilunos.agent.docker.model.ConnectionStatus
 import io.micronaut.context.annotation.Context
@@ -24,12 +22,11 @@ import java.util.*
 
 @Context
 @Infrastructure
-class DockerContext(private val agentConfig: AgentConfig) {
+class DockerContext(private val agentConfig: AgentConfig, private val agentSSLConfig: AgentSSLConfig) {
 
     private val logger: Logger = LoggerFactory.getLogger(DockerContext::class.java)
 
     private lateinit var client: DockerClient
-
     private var status: ConnectionStatus = ConnectionStatus.UNKNOWN
 
     init {
@@ -156,22 +153,13 @@ class DockerContext(private val agentConfig: AgentConfig) {
 
     fun connect() {
         disconnect()
-
-        val clientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost(agentConfig.url)
-                .build()
-
-        val httpClient = ApacheDockerHttpClient.Builder()
-                .dockerHost(clientConfig.dockerHost)
-                .sslConfig(clientConfig.sslConfig)
-                .build()
-
         this.status = ConnectionStatus.BUILDING
 
         try {
-            this.client = DockerClientBuilder.getInstance(clientConfig).withDockerHttpClient(httpClient).build()
-            client.pingCmd().exec()
+            this.client = DockerContextBuilder(agentConfig, agentSSLConfig).build()
+            logger.debug("Attempting to connect to Docker System at '${agentConfig.url}'")
 
+            client.pingCmd().exec()
             this.status = ConnectionStatus.CONNECTED
             logger.info("Connected to Docker System at ${agentConfig.url}")
 

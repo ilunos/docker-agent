@@ -112,13 +112,27 @@ agent:
   #
   # TCP does currently not support TLS authenticated against the Docker Engine
   # and would require to open an unsecured tcp port on your machine.
-  # url: unix:///var/run/docker.sock
+  url: unix:///var/run/docker.sock
 
   # Attempt to connect to the specified docker url above on startup.
   # If disabled you will need to manually call the /docker/connect endpoint to initiate the connection
-  # auto-connect: true
+  auto-connect: true
+
+  ssl:
+
+    # type of SSL configuration. Can be 'none', 'keystore' or 'pem_files'
+    # Setting this to none disables SSL configuration
+    type: none
+
+    keystore-file:                        # Path to either a .jks or .pkcs12 file.
+    keystore-pass:                        # Password for the keystore or pkcs12 file.
+
+    # Path to a directory containing a ca.pem, key.pem & cert.pem
+    # These files must be named and have the file extension as described above!
+    pem-directory:
 
   orchestrator:
+    enabled: false
 
     # Base Url of the Orchestrator, The orchestrator needs to live somewhere from where it can reach the agent
     # url: http://localhost:8080

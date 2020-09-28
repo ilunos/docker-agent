@@ -5,14 +5,12 @@ import com.ilunos.agent.docker.Ilunos
 import edu.umd.cs.findbugs.annotations.NonNull
 import io.micronaut.context.annotation.ConfigurationProperties
 import io.micronaut.core.annotation.Introspected
-import jdk.jfr.BooleanFlag
 import java.io.Serializable
 
 @Introspected
 @ConfigurationProperties("agent")
 class AgentConfig : Serializable {
 
-    @BooleanFlag
     @JsonProperty("auto-connect")
     var autoConnect: Boolean = true
 
