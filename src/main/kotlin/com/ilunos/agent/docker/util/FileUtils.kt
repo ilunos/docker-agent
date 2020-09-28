@@ -18,9 +18,11 @@ object FileUtils {
     fun exists(path: Path): Boolean = Files.exists(path)
 
     fun copyTemplate(resourcePath: String, targetPath: String) {
+        val target = Path.of(targetPath)
         val stream = {}.javaClass.classLoader.getResourceAsStream(resourcePath)
                 ?: throw IllegalStateException("Unable to find '$resourcePath'!")
 
-        Files.copy(stream, Path.of(targetPath))
+        Files.createDirectories(target.parent)
+        Files.copy(stream, target)
     }
 }
